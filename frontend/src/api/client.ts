@@ -129,7 +129,19 @@ class ApiClient {
     });
   }
 
-  async register(data: { name: string; email: string; password: string; role?: string; college?: string; headline?: string }): Promise<{ access_token: string; user: User }> {
+  async register(data: {
+    name: string;
+    email: string;
+    password: string;
+    role?: string;
+    college?: string;
+    company?: string;
+    headline?: string;
+    location?: string;
+    github_url?: string;
+    linkedin_url?: string;
+    bio?: string;
+  }): Promise<{ access_token: string; user: User }> {
     return this.request('/auth/register', {
       method: 'POST',
       body: JSON.stringify(data),

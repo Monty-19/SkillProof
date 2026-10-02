@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkillProof — Proof-of-Skill Platform</title>
     <meta name="description" content="Turn practical coding challenges into verified, AI-assisted proof of skill that recruiters trust." />
+    <script>
+      // Single Page Application route redirect handler for Cloud Run proxies
+      (function() {
+        var path = window.location.pathname;
+        if (path && path !== '/' && !path.startsWith('/api') && !path.startsWith('/@') && !path.startsWith('/src') && !window.location.hash) {
+          window.location.replace('/#' + path + window.location.search);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

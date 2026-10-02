@@ -34,12 +34,16 @@ export const Navbar: React.FC = () => {
     setUserMenuOpen(false);
   };
 
-  const handleDemoSwitch = async (role: 'student' | 'recruiter' | 'admin') => {
-    await quickLogin(role);
+  const handleDemoSwitch = async (persona: string) => {
+    await quickLogin(persona);
     setDemoMenuOpen(false);
-    if (role === 'student') navigate('/dashboard');
-    else if (role === 'recruiter') navigate('/recruiter/candidates');
-    else if (role === 'admin') navigate('/admin/dashboard');
+    if (['student', 'aarav', 'yash', 'purva', 'sanika', 'manthan', 'manthan.c0588@gmail.com'].includes(persona)) {
+      navigate('/dashboard');
+    } else if (['recruiter', 'elena', 'rajesh', 'sarah'].includes(persona)) {
+      navigate('/recruiter/candidates');
+    } else if (persona === 'admin') {
+      navigate('/admin/dashboard');
+    }
   };
 
   return (
@@ -183,30 +187,109 @@ export const Navbar: React.FC = () => {
               </button>
 
               {demoMenuOpen && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl py-2 z-50">
+                <div className="absolute right-0 mt-2 w-72 rounded-xl bg-slate-900 border border-slate-700 shadow-2xl py-2 z-50 max-h-[85vh] overflow-y-auto">
                   <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800">
-                    Switch Demo Account
+                    Switch Demo Persona
+                  </div>
+
+                  {/* Your Account */}
+                  <div className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1">
+                    <span>⭐ Your Account</span>
                   </div>
                   <button
-                    onClick={() => handleDemoSwitch('student')}
-                    className="w-full px-3 py-2 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200"
+                    onClick={() => handleDemoSwitch('manthan')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
                   >
-                    <span>🎓 Student (Aarav Mehta)</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Student</span>
+                    <div>
+                      <div className="font-semibold text-white">Manthan Chavan</div>
+                      <div className="text-[10px] text-slate-400 font-mono">manthan.c0588@gmail.com</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">96 Score</span>
                   </button>
+
+                  {/* Candidates */}
+                  <div className="px-3 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-indigo-400 flex items-center gap-1 border-t border-slate-800/80 mt-1">
+                    <span>💻 Verified Candidates</span>
+                  </div>
+                  <button
+                    onClick={() => handleDemoSwitch('yash')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">Yash Pimpalkar</div>
+                      <div className="text-[10px] text-slate-400">Full Stack Web App Dev</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-semibold">React 94</span>
+                  </button>
+                  <button
+                    onClick={() => handleDemoSwitch('purva')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">Purva Mahajan</div>
+                      <div className="text-[10px] text-slate-400">Data Analyst</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-semibold">Data 95</span>
+                  </button>
+                  <button
+                    onClick={() => handleDemoSwitch('sanika')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">Sanika Barhate</div>
+                      <div className="text-[10px] text-slate-400">Cybersecurity Analyst</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 font-semibold">Security 96</span>
+                  </button>
+                  <button
+                    onClick={() => handleDemoSwitch('student')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">Aarav Mehta</div>
+                      <div className="text-[10px] text-slate-400">Frontend / Systems</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">JS 86</span>
+                  </button>
+
+                  {/* Recruiters */}
+                  <div className="px-3 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1 border-t border-slate-800/80 mt-1">
+                    <span>💼 Recruiters</span>
+                  </div>
                   <button
                     onClick={() => handleDemoSwitch('recruiter')}
-                    className="w-full px-3 py-2 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200"
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
                   >
-                    <span>💼 Recruiter (Apex Ventures)</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-400">Recruiter</span>
+                    <div>
+                      <div className="font-semibold text-white">Elena Rostova</div>
+                      <div className="text-[10px] text-slate-400">Apex Ventures</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Recruiter</span>
                   </button>
                   <button
-                    onClick={() => handleDemoSwitch('admin')}
-                    className="w-full px-3 py-2 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200"
+                    onClick={() => handleDemoSwitch('rajesh')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
                   >
-                    <span>⚡ Admin (Platform Ops)</span>
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400">Admin</span>
+                    <div>
+                      <div className="font-semibold text-white">Rajesh Singhania</div>
+                      <div className="text-[10px] text-slate-400">Stripe / FinTech Labs</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300">Recruiter</span>
+                  </button>
+
+                  {/* Admin */}
+                  <div className="px-3 pt-2.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1 border-t border-slate-800/80 mt-1">
+                    <span>⚡ Governance</span>
+                  </div>
+                  <button
+                    onClick={() => handleDemoSwitch('admin')}
+                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-slate-800 flex items-center justify-between text-slate-200 transition"
+                  >
+                    <div>
+                      <div className="font-semibold text-white">SkillProof Admin</div>
+                      <div className="text-[10px] text-slate-400">Platform Ops</div>
+                    </div>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">Admin</span>
                   </button>
                 </div>
               )}
@@ -311,15 +394,23 @@ export const Navbar: React.FC = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-3.5 py-1.5 rounded-lg text-sm text-slate-300 hover:text-white hover:bg-slate-800 transition font-medium"
+                  className="px-3 py-1.5 rounded-lg text-xs text-slate-300 hover:text-white hover:bg-slate-800 transition font-medium"
                 >
                   Sign In
                 </Link>
                 <Link
-                  to="/register"
-                  className="px-4 py-1.5 rounded-lg text-sm bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold shadow-lg shadow-emerald-500/20 transition hover:scale-102"
+                  to="/register?role=student"
+                  className="hidden sm:inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 font-bold transition"
+                  title="Register as a Student / Candidate"
                 >
-                  Get Started
+                  <span>🎓 Register Student</span>
+                </Link>
+                <Link
+                  to="/register?role=recruiter"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold shadow-lg shadow-cyan-500/20 transition hover:scale-102"
+                  title="Register as an Employer / Recruiter"
+                >
+                  <span>💼 Register Recruiter</span>
                 </Link>
               </div>
             )}

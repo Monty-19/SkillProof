@@ -21,13 +21,27 @@ export const RecruiterCandidatesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Filters
-  const [skill, setSkill] = useState(searchParams.get('skill') || 'JavaScript');
+  const [skill, setSkill] = useState(searchParams.get('skill') || 'All');
   const [minScore, setMinScore] = useState<number>(
     searchParams.get('minimum_score') ? parseInt(searchParams.get('minimum_score')!) : 80
   );
   const [location, setLocation] = useState(searchParams.get('location') || '');
 
-  const skillsOptions = ['All', 'JavaScript', 'React', 'HTML/CSS', 'SQL', 'Python', 'Node.js', 'Docker', 'Data Analysis'];
+  const skillsOptions = [
+    'All', 
+    'JavaScript', 
+    'React', 
+    'Cybersecurity', 
+    'Application Security',
+    'Data Analysis', 
+    'SQL', 
+    'Python', 
+    'Node.js', 
+    'TypeScript',
+    'Data Visualization',
+    'HTML/CSS', 
+    'Docker'
+  ];
 
   const handleSearch = async () => {
     setLoading(true);

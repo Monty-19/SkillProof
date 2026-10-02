@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.core.dependencies import get_db, get_current_user
 from app.core.security import verify_password, get_password_hash, create_access_token
 from app.models.user import User
+from app.models.notification import Notification
 from app.schemas.auth import RegisterRequest, LoginRequest
 from app.utils.responses import success_response, error_response
 
@@ -29,18 +30,52 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
         role = "STUDENT"
 
     hashed_pw = get_password_hash(data.password)
+
+    # Smart defaults based on role
+    if role == "STUDENT":
+        headline = data.headline or "Student & Practical Builder"
+        college = data.college or "University"
+        bio = data.bio or f"Hi, I'm {data.name}. Ready to demonstrate verified engineering capability on SkillProof."
+        avatar = f"https://api.dicebear.com/7.x/initials/svg?seed={data.name}&backgroundColor=10b981,6366f1"
+    else:
+        headline = data.headline or f"Talent Partner @ {data.company or 'Tech Talent'}"
+        college = data.company or data.college or "Hiring Partner"
+        bio = data.bio or f"Hiring verified engineering talent at {data.company or 'our organization'} based on practical code proof."
+        avatar = f"https://api.dicebear.com/7.x/initials/svg?seed={data.name}&backgroundColor=06b6d4,3b82f6"
+
     user = User(
         name=data.name,
         email=data.email.lower(),
         username=username,
         password_hash=hashed_pw,
         role=role,
-        college=data.college,
-        headline=data.headline or ("Demonstrated Builder" if role == "STUDENT" else "Technical Recruiter")
+        college=college,
+        headline=headline,
+        bio=bio,
+        location=data.location or "Global",
+        github_url=data.github_url,
+        linkedin_url=data.linkedin_url,
+        avatar=avatar
     )
     db.add(user)
     db.commit()
     db.refresh(user)
+
+    # Create Welcome Notification in database
+    welcome_msg = (
+        "Welcome to SkillProof! Take your first practical challenge to start earning verified evidence."
+        if role == "STUDENT"
+        else "Welcome to SkillProof Recruiter Portal! Filter candidates by demonstrated scores and inspect code proofs directly."
+    )
+    notif = Notification(
+        user_id=user.id,
+        title="Welcome to SkillProof",
+        message=welcome_msg,
+        type="SYSTEM",
+        read=False
+    )
+    db.add(notif)
+    db.commit()
 
     token = create_access_token(user.id, extra_claims={"role": user.role, "email": user.email})
     return {
@@ -54,6 +89,7 @@ def register(data: RegisterRequest, db: Session = Depends(get_db)):
             "role": user.role,
             "college": user.college,
             "headline": user.headline,
+            "location": user.location,
             "avatar": user.avatar
         }
     }

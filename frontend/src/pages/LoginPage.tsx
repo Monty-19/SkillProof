@@ -26,14 +26,18 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const handleDemo = async (role: 'student' | 'recruiter' | 'admin') => {
+  const handleDemo = async (persona: string) => {
     setError(null);
     setSubmitting(true);
     try {
-      await quickLogin(role);
-      if (role === 'student') navigate('/dashboard');
-      else if (role === 'recruiter') navigate('/recruiter/candidates');
-      else if (role === 'admin') navigate('/admin/dashboard');
+      await quickLogin(persona);
+      if (['student', 'aarav', 'yash', 'purva', 'sanika', 'manthan'].includes(persona)) {
+        navigate('/dashboard');
+      } else if (['recruiter', 'elena', 'rajesh'].includes(persona)) {
+        navigate('/recruiter/candidates');
+      } else if (persona === 'admin') {
+        navigate('/admin/dashboard');
+      }
     } catch (err: any) {
       setError(err.message || 'Demo login failed');
     } finally {
@@ -56,29 +60,78 @@ export const LoginPage: React.FC = () => {
 
         {/* Quick Demo Logins Banner */}
         <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-700 space-y-3">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-400">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Instant Demo Accounts</span>
+          <div className="flex items-center justify-between text-xs font-semibold text-emerald-400">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Instant Persona Login</span>
+            </span>
+            <span className="text-[10px] text-slate-400 font-normal">Click to test instantly</span>
           </div>
+
+          {/* User Account */}
+          <button
+            type="button"
+            onClick={() => handleDemo('manthan')}
+            className="w-full py-2 px-3 text-xs bg-emerald-950/60 hover:bg-emerald-900/80 text-emerald-200 rounded-lg font-semibold border border-emerald-700/50 transition flex items-center justify-between"
+          >
+            <span className="flex items-center gap-1.5">
+              <span>⭐</span>
+              <span><strong>Manthan Chavan</strong> (manthan.c0588@gmail.com)</span>
+            </span>
+            <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Score 96</span>
+          </button>
+
+          {/* Candidates */}
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => handleDemo('student')}
+              onClick={() => handleDemo('yash')}
               className="py-2 px-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Full Stack Web App Developer"
             >
-              🎓 Student
+              💻 Yash P.
             </button>
             <button
               type="button"
-              onClick={() => handleDemo('recruiter')}
+              onClick={() => handleDemo('purva')}
               className="py-2 px-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Data Analyst"
             >
-              💼 Recruiter
+              📊 Purva M.
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemo('sanika')}
+              className="py-2 px-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Cybersecurity Analyst"
+            >
+              🛡️ Sanika B.
+            </button>
+          </div>
+
+          {/* Recruiters & Admin */}
+          <div className="grid grid-cols-3 gap-2">
+            <button
+              type="button"
+              onClick={() => handleDemo('recruiter')}
+              className="py-2 px-2 text-xs bg-slate-800/80 hover:bg-slate-700 text-cyan-300 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Apex Ventures Recruiter"
+            >
+              💼 Elena (VC)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDemo('rajesh')}
+              className="py-2 px-2 text-xs bg-slate-800/80 hover:bg-slate-700 text-cyan-300 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Stripe Talent Partner"
+            >
+              💳 Rajesh (Stripe)
             </button>
             <button
               type="button"
               onClick={() => handleDemo('admin')}
-              className="py-2 px-2 text-xs bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-semibold border border-slate-700 transition text-center"
+              className="py-2 px-2 text-xs bg-slate-800/80 hover:bg-slate-700 text-purple-300 rounded-lg font-semibold border border-slate-700 transition text-center"
+              title="Admin Ops"
             >
               ⚡ Admin
             </button>

@@ -6,9 +6,21 @@ interface AuthContextType {
   token: string | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (data: { name: string; email: string; password: string; role?: string; college?: string }) => Promise<void>;
+  register: (data: {
+    name: string;
+    email: string;
+    password: string;
+    role?: string;
+    college?: string;
+    company?: string;
+    headline?: string;
+    location?: string;
+    github_url?: string;
+    linkedin_url?: string;
+    bio?: string;
+  }) => Promise<void>;
   logout: () => void;
-  quickLogin: (role: 'student' | 'recruiter' | 'admin') => Promise<void>;
+  quickLogin: (personaOrEmail: string) => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
@@ -47,7 +59,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(res.user);
   };
 
-  const register = async (data: { name: string; email: string; password: string; role?: string; college?: string }) => {
+  const register = async (data: {
+    name: string;
+    email: string;
+    password: string;
+    role?: string;
+    college?: string;
+    company?: string;
+    headline?: string;
+    location?: string;
+    github_url?: string;
+    linkedin_url?: string;
+    bio?: string;
+  }) => {
     const res = await api.register(data);
     localStorage.setItem('skillproof_token', res.access_token);
     setToken(res.access_token);
@@ -60,10 +84,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const quickLogin = async (role: 'student' | 'recruiter' | 'admin') => {
-    let email = 'demo.student@skillproof.dev';
-    if (role === 'recruiter') email = 'demo.recruiter@skillproof.dev';
-    if (role === 'admin') email = 'demo.admin@skillproof.dev';
+  const quickLogin = async (personaOrEmail: string) => {
+    let email = personaOrEmail;
+    if (personaOrEmail.includes('@')) {
+      email = personaOrEmail;
+    } else if (personaOrEmail === 'student' || personaOrEmail === 'aarav') {
+      email = 'demo.student@skillproof.dev';
+    } else if (personaOrEmail === 'yash') {
+      email = 'yash.pimpalkar@skillproof.dev';
+    } else if (personaOrEmail === 'purva') {
+      email = 'purva.mahajan@skillproof.dev';
+    } else if (personaOrEmail === 'sanika') {
+      email = 'sanika.barhate@skillproof.dev';
+    } else if (personaOrEmail === 'manthan') {
+      email = 'manthan.c0588@gmail.com';
+    } else if (personaOrEmail === 'recruiter' || personaOrEmail === 'elena') {
+      email = 'demo.recruiter@skillproof.dev';
+    } else if (personaOrEmail === 'rajesh') {
+      email = 'rajesh.singhania@techcorp.com';
+    } else if (personaOrEmail === 'sarah') {
+      email = 'sarah.jenkins@cloudscale.io';
+    } else if (personaOrEmail === 'admin') {
+      email = 'demo.admin@skillproof.dev';
+    }
     await login(email, 'password123');
   };
 

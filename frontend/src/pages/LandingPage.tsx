@@ -50,20 +50,27 @@ export const LandingPage: React.FC = () => {
             </p>
 
             {/* Action Buttons */}
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
-                to="/challenges"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-base shadow-lg shadow-emerald-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2"
+                to="/register?role=student"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-emerald-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2"
               >
-                <span>Prove Your Skills</span>
+                <span>🎓 Register as Student</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/register?role=recruiter"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-sm shadow-lg shadow-cyan-500/25 transition-all hover:scale-105 flex items-center justify-center gap-2"
+              >
+                <span>💼 Register as Recruiter</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/recruiter/candidates"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-base transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-semibold text-sm transition flex items-center justify-center gap-2"
               >
                 <Search className="w-4 h-4 text-emerald-400" />
-                <span>Explore Candidates</span>
+                <span>Search Candidates</span>
               </Link>
             </div>
 
