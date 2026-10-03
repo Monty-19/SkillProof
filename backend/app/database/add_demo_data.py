@@ -128,12 +128,12 @@ def add_demo_data():
         db.commit()
 
         # 3. USERS TO ADD / UPDATE
-        # User: Manthan Chavan (User login)
+        # User: Manthan Choudhary (User login)
         manthan = db.query(User).filter(User.email == "manthan.c0588@gmail.com").first()
         if not manthan:
             manthan = User(
                 id="user-student-manthan",
-                name="Manthan Chavan",
+                name="Manthan Choudhary",
                 username="manthan_c",
                 email="manthan.c0588@gmail.com",
                 password_hash=default_pw,
